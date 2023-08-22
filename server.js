@@ -34,6 +34,12 @@ app.use(session(sess));
 // Activate routes
 app.use(routes);
 
+// Error handling middleware (Add this part)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 // Connect to the database and then start the Express server
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {
