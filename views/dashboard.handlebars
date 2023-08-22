@@ -1,0 +1,12 @@
+<h2>Your Dashboard</h2>
+<a href="/dashboard/new">Create New Post</a>
+
+<ul>
+    {{#each posts}}
+    <li>
+        <strong>{{this.title}}</strong>
+        <a href="/dashboard/edit/{{this.id}}">Edit</a>
+        <a href="/dashboard/delete/{{this.id}}">Delete</a>
+    </li>
+    {{/each}}
+</ul>
