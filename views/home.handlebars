@@ -1,0 +1,9 @@
+<h2>All Posts</h2>
+<ul>
+    {{#each posts}}
+    <li>
+        <a href="/post/{{this.id}}">{{this.title}}</a>
+        <small>Posted on: {{this.date_created}}</small>
+    </li>
+    {{/each}}
+</ul>
