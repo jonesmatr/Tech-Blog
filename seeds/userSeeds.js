@@ -1,3 +1,5 @@
+const User = require('../models/User');  // Make sure the path to your models is correct
+
 const userData = [
     {
         username: 'john_doe',
@@ -16,4 +18,9 @@ const userData = [
     }
 ];
 
-module.exports = userData;
+const seedUsers = async () => {
+    await User.bulkCreate(userData);
+};
+
+module.exports = seedUsers;
+
