@@ -5,16 +5,15 @@ const bcrypt = require('bcrypt');
 
 router.post('/signup', async (req, res) => {
     try {
-        const newUser = await User.create({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,  // this will be hashed by a hook in the User model
-        });
+        const { username, password } = req.body;
+        const newUser = await User.create({ username, password });
 
+        // Store the user's ID and logged-in status in the session
         req.session.user_id = newUser.id;
         req.session.logged_in = true;
 
-        res.status(201).json(newUser);
+        // Redirect to the dashboard
+        res.redirect('/dashboard');
     } catch (err) {
         res.status(500).json(err);
     }
@@ -24,19 +23,19 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({
             where: {
-                email: req.body.email,
+                username: req.body.username, // Use username instead of email
             },
         });
 
         if (!user) {
-            res.status(400).json({ message: 'Incorrect email or password!' });
+            res.status(400).json({ message: 'Incorrect username or password!' }); // Updated message
             return;
         }
 
         const validPassword = await bcrypt.compare(req.body.password, user.password);
 
         if (!validPassword) {
-            res.status(400).json({ message: 'Incorrect email or password!' });
+            res.status(400).json({ message: 'Incorrect username or password!' }); // Updated message
             return;
         }
 
