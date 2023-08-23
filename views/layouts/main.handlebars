@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Blog</title>
-    <link rel="stylesheet" href="/css/jass.css"><!-- Assuming you have a styles.css in the public folder -->
+    <link rel="stylesheet" href="/styles.css"><!-- Assuming you have a styles.css in the public folder -->
 </head>
-
 <body>
 
-    <header>
-        <!-- Navigation links go here -->
-        
-        <nav>
-            <a href="/">Home</a>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/login">Login</a>
-            <a href="/logout">Logout</a>
-            <!-- Other navigation links can be added as needed -->
-        </nav>
-        <h1>Tech Blog</h1>
-        
-    </header>
+<header>
+    <!-- Navigation links go here -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <!-- Other navigation links can be added as needed -->
+    </nav>
+</header>
 
-    <main class="container container-fluid mt-5">
-        {{{ body }}} <!-- This is where the content of other views will be injected -->
-    </main>
+<main>
+    {{{ body }}} <!-- This is where the content of other views will be injected -->
+</main>
 
-    <footer>
-        <!-- Footer content goes here -->
-        {{#if logged_in}}
-        <script src="/js/logout.js"></script>
-        {{/if}}
-        <p>© 2023 Tech Blog</p>
-    </footer>
+<footer>
+    <!-- Footer content goes here -->
+    <p>© 2023 Tech Blog</p>
+</footer>
 
 </body>
-
 </html>
