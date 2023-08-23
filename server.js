@@ -1,10 +1,12 @@
 const express = require('express');
 const session = require('express-session');
+const path = require('path');
 const helpers = require('./utils/helpers');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers'); // Assuming your routes are in a "controllers" folder
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,7 +18,11 @@ app.use(express.urlencoded({ extended: true }));
 // Static directory
 app.use(express.static('public'));
 
-const hbs = exphbs.create({ helpers });
+const hbs = exphbs.create({ 
+  helpers,
+  defaultLayout:'main',
+  partialsDir: path.join(__dirname, 'views/partials/')
+});
 
 // Handlebars setup
 app.engine('handlebars', hbs.engine);

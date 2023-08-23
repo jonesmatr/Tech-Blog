@@ -1,0 +1,12 @@
+<!-- navigation.handlebars -->
+
+<nav class="navbar">
+    <a href="/">Home</a>
+    <!-- Add other links as needed -->
+    {{#unless loggedIn}}
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+    {{else}}
+        <a href="/logout">Logout</a>
+    {{/unless}}
+</nav>
