@@ -2,11 +2,12 @@
 
 <nav class="navbar">
     <a href="/">Home</a>
-    <!-- Add other links as needed -->
+    <a href="/dashboard">Dashboard</a>
     {{#unless loggedIn}}
-        <a href="/login">Login</a>
         <a href="/signup">Sign Up</a>
+        <a href="/login">Login</a>
     {{else}}
         <a href="/logout">Logout</a>
     {{/unless}}
 </nav>
+
