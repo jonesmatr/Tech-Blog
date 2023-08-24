@@ -112,7 +112,7 @@ router.get('/post/:id', async (req, res) => {
         }
 
         const post = postData.get({ plain: true });
-        console.log('Date:', post.date_created);
+        console.log('Comments:', post.comments);
         res.render('post', { post });
     } catch (err) {
         console.error(err);
@@ -128,5 +128,41 @@ router.get('/signup', (req, res) => {
 router.get('/login', (req, res) => {
     res.render('login');
 });
+
+router.post('/api/comments', async (req, res) => {
+    try {
+        const { postId, text } = req.body;
+
+        // Check if the user is logged in
+        if (!req.session.loggedIn) {
+            res.status(403).json({ message: 'You must be logged in to leave a comment.' });
+            return;
+        }
+
+        // Create a new Comment
+        const newComment = await Comment.create({
+            content: text,
+            user_id: req.session.user_id,
+            post_id: postId,
+        });
+
+        res.status(200).json(newComment);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error logging out');
+        } else {
+            res.redirect('/'); // Redirect to the home page or any other page
+        }
+    });
+});
+
 
 module.exports = router;

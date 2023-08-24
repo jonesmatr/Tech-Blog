@@ -6,10 +6,19 @@
 <ul>
     {{#each post.comments as |comment|}}
     <li>
-        <strong>{{comment.user.username}}:</strong> {{comment.text}} ({{comment.createdAt}})
+        <strong>{{comment.user.username}}:</strong> {{comment.content}} ({{format_date comment.date_created}})
     </li>
     {{/each}}
 </ul>
+
+{{#if loggedIn}}
+<form action="/api/comments" method="POST">
+    <input type="hidden" name="postId" value="{{post.id}}">
+    <textarea name="text" placeholder="Leave a comment"></textarea>
+    <button type="submit">Submit Comment</button>
+</form>
+{{/if}}
+
 
 {{#if loggedIn}}
 <form action="/api/comments" method="POST">

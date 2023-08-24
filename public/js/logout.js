@@ -1,14 +1,10 @@
 const logout = async () => {
-  // TODO: Add a comment describing the functionality of this expression
-  // Sends a POST request to the '/api/users/logout' endpoint.
-  const response = await fetch('/api/users/logout', {
+  const response = await fetch('/api/logout', { // Use the correct route here
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   });
 
   if (response.ok) {
-    // TODO: Add a comment describing the functionality of this statement
-    // Redirects the user to the login page if the logout was successful.
     document.location.replace('/login');
   } else {
     // Displays an alert if the logout failed.
