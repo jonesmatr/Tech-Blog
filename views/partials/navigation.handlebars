@@ -3,13 +3,13 @@
 <nav class="navbar">
     <a href="/">Home</a>
     <a href="/dashboard">Dashboard</a>
-    {{#unless loggedIn}}
-        <a href="/signup">Sign Up</a>
+    {{#unless loggedIn}}        
         <a href="/login">Login</a>
-    {{else}}
         <form action="/logout" method="post">
         <button type="submit">Logout</button>
     </form>
+    {{else}}
+        <a href="/signup">Sign Up</a>
     {{/unless}}
 </nav>
 
