@@ -7,7 +7,9 @@
         <a href="/signup">Sign Up</a>
         <a href="/login">Login</a>
     {{else}}
-        <a href="/logout">Logout</a>
+        <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
     {{/unless}}
 </nav>
 
