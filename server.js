@@ -40,6 +40,10 @@ const sess = {
 };
 app.use(session(sess));
 
+// Activate specific routes
+const dashboardRoutes = require('./controllers/api/dashboardRoutes');
+app.use('/', dashboardRoutes);
+
 // Activate routes
 app.use(routes);
 
@@ -50,7 +54,7 @@ app.use((err, req, res, next) => {
 });
 
 // Connect to the database and then start the Express server
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync().then(() => {
   app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}!`);
   });
