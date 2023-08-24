@@ -12,3 +12,7 @@ body {
 }
 
 /* Add more styles as needed */
+.hidden {
+    display: none;
+  }
+  

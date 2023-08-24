@@ -1,5 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Dashboard</title>
+    <!-- Link to your styles.css file -->
+    <link rel="stylesheet" href="/path/to/your/styles.css">
+</head>
+
 <h2>Your Dashboard</h2>
-<a href="/dashboard/new">Create New Post</a>
 
 <ul>
     {{#each posts}}
@@ -10,3 +19,22 @@
     </li>
     {{/each}}
 </ul>
+
+<!-- Create New Post button -->
+<button id="create-new-post-button">Create New Post</button>
+
+<!-- New Post Form (hidden by default) -->
+<div id="new-post-form" class="hidden">
+  <form action="#" method="post">
+    <label for="post-title">Title:</label>
+    <input type="text" id="post-title" name="title" required>
+    
+    <label for="post-contents">Contents:</label>
+    <textarea id="post-contents" name="contents" required></textarea>
+    
+    <button type="submit">Create Post</button>
+  </form>
+</div>
+
+
+<script src="/js/script.js"></script>

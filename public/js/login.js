@@ -1,33 +1,49 @@
 const loginFormHandler = async (event) => {
-  // TODO: Add a comment describing the functionality of this statement
-  // Prevents the default form submission behavior, which allows us to handle the form submission manually.
   event.preventDefault();
 
-  // TODO: Add a comment describing the functionality of these expressions
-  // Retrieves the values entered in the email and password fields and trims any leading/trailing whitespace.
-  const email = document.querySelector('#email-login').value.trim();
+  const username = document.querySelector('#username-login').value.trim();
   const password = document.querySelector('#password-login').value.trim();
 
-  if (email && password) {
-    // TODO: Add a comment describing the functionality of this expression
-    // Sends a POST request to the '/api/users/login' endpoint with the provided email and password as JSON data.
-    const response = await fetch('/api/users/login', {
+  if (username && password) {
+    const response = await fetch('/api/users', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
-      // Redirects the user to the homepage if the login was successful.
-      document.location.replace('/');
+      document.location.replace('/dashboard');
     } else {
-      // Displays an alert if the login failed.
-      alert('Failed to log in');
+      alert(response.statusText);
     }
   }
 };
 
-// Adds an event listener to the submit event of the '.login-form' element, triggering the loginFormHandler function when the form is submitted.
+const signupFormHandler = async (event) => {
+  event.preventDefault();
+
+  const username = document.querySelector('#username-signup').value.trim();
+  const password = document.querySelector('#password-signup').value.trim();
+
+  if (username && password) {
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      document.location.replace('/dashboard');
+    } else {
+      alert(response.statusText);
+    }
+  }
+};
+
 document
   .querySelector('.login-form')
   .addEventListener('submit', loginFormHandler);
+
+document
+  .querySelector('.signup-form')
+  .addEventListener('submit', signupFormHandler);

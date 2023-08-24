@@ -16,6 +16,25 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
+// Function to handle new post submission
+router.post('/api/posts', withAuth, async (req, res) => {
+  try {
+    const { title, contents } = req.body;
+
+    // Create a new post
+    const newPost = await Post.create({
+      title,
+      contents,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newPost);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
 // Route for handling logout
 router.post('/api/logout', (req, res) => {
   if (req.session.logged_in) {
