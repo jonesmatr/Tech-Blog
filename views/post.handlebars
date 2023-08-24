@@ -1,18 +1,20 @@
-<h2>{{post.title}}</h2>
+<h1>{{post.title}}</h1>
+<p>By: {{post.user.username}} on {{format_date post.createdAt}}</p>
 <p>{{post.content}}</p>
 
-<h3>Comments:</h3>
+<h2>Comments</h2>
 <ul>
-    {{#each comments}}
+    {{#each post.comments as |comment|}}
     <li>
-        <strong>{{this.username}}</strong>
-        <p>{{this.content}}</p>
+        <strong>{{comment.user.username}}:</strong> {{comment.text}} ({{comment.createdAt}})
     </li>
     {{/each}}
 </ul>
 
-<h3>Add a Comment:</h3>
-<form action="/post/{{post.id}}/comment" method="post">
-    <textarea name="content" required></textarea>
+{{#if loggedIn}}
+<form action="/api/comments" method="POST">
+    <input type="hidden" name="postId" value="{{post.id}}">
+    <textarea name="text" placeholder="Leave a comment"></textarea>
     <button type="submit">Submit Comment</button>
 </form>
+{{/if}}

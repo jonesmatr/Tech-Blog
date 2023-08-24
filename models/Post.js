@@ -1,6 +1,7 @@
 // Post.js
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const User = require('./User');
 
 class Post extends Model {}
 
@@ -41,5 +42,11 @@ Post.init(
     modelName: 'post',
   }
 );
+
+// Association
+Post.belongsTo(User, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE'
+});
 
 module.exports = Post;

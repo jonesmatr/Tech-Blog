@@ -7,6 +7,7 @@ const routes = require('./controllers');
 const dashboardRoutes = require('./controllers/api/dashboardRoutes');
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const { format_date } = require('./utils/helpers');
 
 
 const app = express();
@@ -20,7 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 const hbs = exphbs.create({ 
-  helpers,
+  helpers: {
+    format_date
+  },
   defaultLayout:'main',
   partialsDir: path.join(__dirname, 'views/partials/')
 });
