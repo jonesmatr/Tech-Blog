@@ -29,4 +29,13 @@ router.post('/api/logout', (req, res) => {
 
 router.use('/logout', logoutRoutes);
 
+// Check for authentication and redirect to appropriate page
+router.use((req, res, next) => {
+    if (!req.session.logged_in) {
+      res.redirect('/login'); // Redirect to sign-in page
+    } else {
+      next();
+    }
+  });
+
 module.exports = router;
