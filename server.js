@@ -3,7 +3,8 @@ const session = require('express-session');
 const path = require('path');
 const helpers = require('./utils/helpers');
 const exphbs = require('express-handlebars');
-const routes = require('./controllers'); // Assuming your routes are in a "controllers" folder
+const routes = require('./controllers');
+const dashboardRoutes = require('./controllers/api/dashboardRoutes');
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -41,7 +42,6 @@ const sess = {
 app.use(session(sess));
 
 // Activate specific routes
-const dashboardRoutes = require('./controllers/api/dashboardRoutes');
 app.use('/', dashboardRoutes);
 
 // Activate routes
