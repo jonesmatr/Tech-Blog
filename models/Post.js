@@ -42,10 +42,4 @@ Post.init(
   }
 );
 
-// Association
-Post.belongsTo(User, {
-  foreignKey: 'user_id',
-  onDelete: 'CASCADE'
-});
-
 module.exports = Post;

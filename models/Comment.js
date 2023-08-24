@@ -45,15 +45,4 @@ Comment.init(
   }
 );
 
-// Associations
-Comment.belongsTo(User, {
-  foreignKey: 'user_id',
-  onDelete: 'CASCADE'
-});
-
-Comment.belongsTo(Post, {
-  foreignKey: 'post_id',
-  onDelete: 'CASCADE'
-});
-
 module.exports = Comment;
