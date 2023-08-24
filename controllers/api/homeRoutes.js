@@ -112,6 +112,7 @@ router.get('/post/:id', async (req, res) => {
         }
 
         const post = postData.get({ plain: true });
+        console.log('Date:', post.date_created);
         res.render('post', { post });
     } catch (err) {
         console.error(err);
