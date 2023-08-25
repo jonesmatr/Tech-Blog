@@ -9,6 +9,7 @@ const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const { format_date } = require('./utils/helpers');
 const logoutRoutes = require('./controllers/api/logoutRoutes');
+const postRoutes = require('./controllers/api/postRoutes');
 
 
 const app = express();
@@ -66,6 +67,8 @@ app.post('/api/logout', (req, res) => {
 
 // Activate routes
 app.use(routes);
+
+app.use('/api/posts', postRoutes);
 
 // Error handling middleware (Add this part)
 app.use((err, req, res, next) => {
