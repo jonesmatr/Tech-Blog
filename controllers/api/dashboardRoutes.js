@@ -3,6 +3,7 @@ const router = express.Router();
 const logoutRoutes = require('./logoutRoutes');
 const { User } = require('../../models');
 const withAuth = require('../../utils/auth');
+const { Post } = require('../../models');
 
 
 // Route for rendering the dashboard
@@ -19,12 +20,12 @@ router.get('/dashboard', withAuth, async (req, res) => {
 // Function to handle new post submission
 router.post('/api/posts', withAuth, async (req, res) => {
   try {
-    const { title, contents } = req.body;
+    const { title, content } = req.body;
 
     // Create a new post
     const newPost = await Post.create({
       title,
-      contents,
+      content,
       user_id: req.session.user_id,
     });
 
