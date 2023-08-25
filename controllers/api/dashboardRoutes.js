@@ -8,9 +8,19 @@ const { Post } = require('../../models');
 
 // Route for rendering the dashboard
 router.get('/dashboard', withAuth, async (req, res) => {
+  console.log('User ID from session:', req.session.user_id);
     try {
-  // Handle the request and render a view or return data
-  res.render('dashboard');
+  // Fetch posts where the user_id matches the id stored in the session
+  const userPosts = await Post.findAll({
+    where: {
+        user_id: req.session.user_id
+    }
+});
+console.log('Posts fetched:', userPosts);
+
+// Serialize data before passing to template
+const posts = userPosts.map((post) => post.get({ plain: true }));
+  res.render('dashboard', { posts });
 } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
