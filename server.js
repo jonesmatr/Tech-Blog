@@ -46,8 +46,7 @@ const hbs = exphbs.create({
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
-// Activate specific routes
-app.use('/', dashboardRoutes);
+
 
 // Use the logoutRoutes router
 app.use(logoutRoutes);
@@ -75,6 +74,9 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
+// Activate specific routes
+app.use('/', dashboardRoutes);
 
 // Connect to the database and then start the Express server
 sequelize.sync().then(() => {

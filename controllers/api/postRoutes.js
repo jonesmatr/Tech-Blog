@@ -10,7 +10,7 @@ router.post('/create', async (req, res) => {
             user_id: req.session.user_id  // Assuming the user ID is stored in session
         });
 
-        res.status(201).json(newPost);
+        res.redirect('/dashboard');
     } catch (err) {
         res.status(500).json(err);
     }
@@ -69,3 +69,6 @@ router.post('/:id/comment', async (req, res) => {
 });
 
 module.exports = router;
+
+
+//Able to create posts but need to redirect back to the dashboard to make sure it is being displayed there. 
