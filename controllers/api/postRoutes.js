@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { Post, Comment } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-router.post('/create', async (req, res) => {
+
+router.post('/create', withAuth, async (req, res) => {
     try {
         const newPost = await Post.create({
             title: req.body.title,
@@ -16,11 +18,12 @@ router.post('/create', async (req, res) => {
     }
 });
 
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', withAuth, async (req, res) => {
     try {
         const updatedPost = await Post.update(req.body, {
             where: {
                 id: req.params.id,
+                user_id: req.session.user_id
             },
         });
 
@@ -35,11 +38,12 @@ router.put('/edit/:id', async (req, res) => {
     }
 });
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', withAuth, async (req, res) => {
     try {
         const postToDelete = await Post.destroy({
             where: {
                 id: req.params.id,
+                user_id: req.session.user_id
             },
         });
 
@@ -54,7 +58,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-router.post('/:id/comment', async (req, res) => {
+router.post('/:id/comment', withAuth, async (req, res) => {
     try {
         const newComment = await Comment.create({
             content: req.body.content,
@@ -69,6 +73,3 @@ router.post('/:id/comment', async (req, res) => {
 });
 
 module.exports = router;
-
-
-//Able to create posts but need to redirect back to the dashboard to make sure it is being displayed there. 
