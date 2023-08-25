@@ -4,6 +4,8 @@ const { Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 
+
+
 router.post('/create', withAuth, async (req, res) => {
     try {
         const newPost = await Post.create({
@@ -38,6 +40,23 @@ router.put('/edit/:id', withAuth, async (req, res) => {
     }
 });
 
+router.get('/edit/:id', withAuth, async (req, res) => {
+    console.log("Inside /edit/:id", req.params.id);
+    try {
+      const postData = await Post.findByPk(req.params.id);
+  
+      if (postData) {
+        const post = postData.get({ plain: true });
+        res.render('edit-post', { post, loggedIn: req.session.loggedIn });
+      } else {
+        res.status(404).json({ message: 'No post found with this ID!' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json(err);
+    }
+  });
+
 router.delete('/delete/:id', withAuth, async (req, res) => {
     try {
         const postToDelete = await Post.destroy({
@@ -58,6 +77,22 @@ router.delete('/delete/:id', withAuth, async (req, res) => {
     }
 });
 
+
+router.get('/:id', async (req, res) => {
+    try {
+        const postData = await Post.findByPk(req.params.id);
+        if (postData) {
+            const post = postData.get({ plain: true });
+            res.status(200).json(post); // Respond with JSON
+        } else {
+            res.status(404).json({ message: 'No post found with this ID!' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
 router.post('/:id/comment', withAuth, async (req, res) => {
     try {
         const newComment = await Comment.create({
@@ -73,3 +108,6 @@ router.post('/:id/comment', withAuth, async (req, res) => {
 });
 
 module.exports = router;
+
+
+//Edit button is still not working in the dashboard

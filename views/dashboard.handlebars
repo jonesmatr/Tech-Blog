@@ -14,7 +14,7 @@
     {{#each posts}}
     <li>
         <strong>{{this.title}}</strong>
-        <a href="#" class="edit-button" data-id="{{this.id}}">Edit</a>
+        <a href="/dashboard/edit/{{this.id}}" class="edit-button" data-id="{{this.id}}">Edit</a>
         <a href="#" class="delete-button" data-id="{{this.id}}">Delete</a>
     </li>
     {{/each}}
@@ -34,18 +34,13 @@
   </form>
 </div>
 
-<!-- Edit Post Form (hidden by default) -->
-<div id="edit-post-form" class="hidden">
-  <form data-id="">
-    <label for="edit-post-title">Title:</label>
-    <input type="text" id="edit-post-title" required>
-    <label for="edit-post-content">Content:</label>
-    <textarea id="edit-post-content" required></textarea>
-    <button type="submit">Update Post</button>
-  </form>
+<div id="edit-form-container">
+  <!-- Form will be inserted here -->
 </div>
+
 
 <script src="/js/script.js"></script>
 
 </body>
 </html>
+

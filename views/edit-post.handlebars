@@ -1,0 +1,10 @@
+<!-- edit-post.handlebars -->
+<form id="edit-post-form" data-id="{{post.id}}">
+  <label for="edit-post-title">Title:</label>
+  <input type="text" id="edit-post-title" value="{{post.title}}" required>
+  
+  <label for="edit-post-content">Content:</label>
+  <textarea id="edit-post-content" required>{{post.content}}</textarea>
+  
+  <button type="submit">Update Post</button>
+</form>

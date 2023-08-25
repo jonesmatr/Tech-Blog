@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Edit post
     document.querySelectorAll('.edit-button').forEach(button => {
         button.addEventListener('click', async (event) => {
+            event.preventDefault(); // Prevent default behavior of clicking an anchor tag
+            console.log("Edit button clicked");
             const postId = event.target.getAttribute('data-id');
 
             // Fetch existing post data
@@ -32,33 +34,45 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             const postData = await response.json();
 
-            // Populate edit form
-            document.getElementById('edit-post-title').value = postData.title;
-            document.getElementById('edit-post-content').value = postData.content;
+            // Create and populate form
+            const formHtml = `
+                <form id="edit-post-form" data-id="${postId}">
+                    <label for="edit-post-title">Title:</label>
+                    <input type="text" id="edit-post-title" value="${postData.title}" required>
 
-            // Assuming you're showing your edit form here (e.g., modal)
+                    <label for="edit-post-content">Content:</label>
+                    <textarea id="edit-post-content" required>${postData.content}</textarea>
+
+                    <button type="submit">Update Post</button>
+                </form>
+            `;
+
+            // Insert form into DOM
+            document.getElementById('edit-form-container').innerHTML = formHtml;
+
+            // Attach event listener for this new form
+            const editForm = document.getElementById('edit-post-form');
+            if (editForm) {
+                editForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const postId = editForm.getAttribute('data-id');
+                    const title = document.getElementById('edit-post-title').value.trim();
+                    const content = document.getElementById('edit-post-content').value.trim();
+
+                    const response = await fetch(`/api/posts/edit/${postId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ title, content })
+                    });
+
+                    if (response.ok) {
+                        document.location.replace('/dashboard');
+                    } else {
+                        alert('Failed to update post');
+                    }
+                });
+            }
+        });
         });
     });
-
-    // Submit edited post
-    document.getElementById('edit-post-form').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const postId = event.target.getAttribute('data-id');  // Assuming post ID is set as a data attribute on the form
-        const newTitle = document.getElementById('edit-post-title').value;
-        const newContent = document.getElementById('edit-post-content').value;
-
-        const response = await fetch(`/api/posts/edit/${postId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ title: newTitle, content: newContent })
-        });
-
-        if (response.ok) {
-            location.reload();
-        } else {
-            // Handle error
-        }
-    });
-});
