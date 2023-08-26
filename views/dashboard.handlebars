@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Dashboard</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -13,8 +13,7 @@
 <ul>
     {{#each posts}}
     <li>
-        <strong>{{this.title}}</strong>
-        <p>{{this.content}}</p>
+        <strong>{{this.title}}</strong> ({{format_date this.date_created}})
         <a href="/dashboard/edit/{{this.id}}" class="edit-button" data-id="{{this.id}}">Edit</a>
         <a href="#" class="delete-button" data-id="{{this.id}}">Delete</a>
     </li>
