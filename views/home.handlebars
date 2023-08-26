@@ -3,6 +3,7 @@
     {{#each posts}}
     <li>
         <a href="/post/{{this.id}}">{{this.title}}</a>
+        <p>{{this.content}}</p>
         <small>Posted on: {{format_date this.date_created}}</small>
     </li>
     {{/each}}

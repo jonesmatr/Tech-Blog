@@ -3,9 +3,6 @@ const router = express.Router();
 const { Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-
-
-
 router.post('/create', withAuth, async (req, res) => {
     try {
         const newPost = await Post.create({
@@ -47,7 +44,7 @@ router.get('/edit/:id', withAuth, async (req, res) => {
   
       if (postData) {
         const post = postData.get({ plain: true });
-        res.render('edit-post', { post, loggedIn: req.session.loggedIn });
+        res.render('edit-post', { post, logged_in: req.session.logged_in });
       } else {
         res.status(404).json({ message: 'No post found with this ID!' });
       }
@@ -78,12 +75,24 @@ router.delete('/delete/:id', withAuth, async (req, res) => {
 });
 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', withAuth, async (req, res) => {
     try {
-        const postData = await Post.findByPk(req.params.id);
+        const postData = await Post.findByPk(req.params.id, {
+            include: [
+                {
+                    model: Comment,
+                    attributes: ['id', 'content', 'date_created', 'user_id'],
+                },
+            ],
+        });
+
         if (postData) {
             const post = postData.get({ plain: true });
-            res.status(200).json(post); // Respond with JSON
+            console.log("Logged in status: ", req.session.logged_in);
+            res.render('post', { 
+                post, 
+                logged_in: req.session.logged_in  // Make sure you're passing this
+            });
         } else {
             res.status(404).json({ message: 'No post found with this ID!' });
         }
@@ -93,8 +102,13 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+  
 router.post('/:id/comment', withAuth, async (req, res) => {
     try {
+        if (!req.session.logged_in) {
+            return res.status(401).json({ error: 'You must be logged in to comment' });
+        }
+
         const newComment = await Comment.create({
             content: req.body.content,
             user_id: req.session.user_id,  // Assuming the user ID is stored in session
@@ -108,6 +122,3 @@ router.post('/:id/comment', withAuth, async (req, res) => {
 });
 
 module.exports = router;
-
-
-//Edit button is still not working in the dashboard

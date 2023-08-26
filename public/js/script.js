@@ -6,6 +6,28 @@ document.addEventListener("DOMContentLoaded", function () {
         newPostForm.classList.toggle('hidden');
     });
 
+    // Post comment form
+    document.getElementById('comment-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const postId = document.querySelector("input[name='postId']").value;
+        const newComment = document.getElementById('new-comment').value;
+      
+        // Submit the new comment using fetch or another AJAX method
+        const response = await fetch(`/api/comments`, {
+          method: 'POST',
+          body: JSON.stringify({ postId: postId, text: newComment }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      
+        if (response.ok) {
+          // Optionally reload the page or update the comment list dynamically
+          location.reload();
+        }
+      });
+      
+
     // Delete post
     document.querySelectorAll('.delete-button').forEach(button => {
         button.addEventListener('click', async (event) => {
