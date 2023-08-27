@@ -134,7 +134,7 @@ router.post('/api/comments', async (req, res) => {
         const { postId, text } = req.body;
 
         // Check if the user is logged in
-        if (!req.session.loggedIn) {
+        if (!req.session.logged_in) {
             res.status(403).json({ message: 'You must be logged in to leave a comment.' });
             return;
         }

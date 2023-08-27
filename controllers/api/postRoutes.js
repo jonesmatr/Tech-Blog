@@ -110,7 +110,7 @@ router.get('/:id', async (req, res) => {
 
 //         if (postData) {
 //             const post = postData.get({ plain: true });
-//             res.json('post', { post, logged_in: req.session.logged_in });  // Note the 'logged_in' part
+//             res.render('post', { post, logged_in: req.session.logged_in });  // Note the 'logged_in' part
 //         } else {
 //             res.status(404).json({ message: 'No post found with this ID!' });
 //         }
@@ -119,6 +119,8 @@ router.get('/:id', async (req, res) => {
 //         res.status(500).json(err);
 //     }
 // });
+
+
 
 router.post('/:id/comment', withAuth, async (req, res) => {
     try {
@@ -137,14 +139,15 @@ router.post('/:id/comment', withAuth, async (req, res) => {
 // Inside your postRoutes.js or a new file like commentRoutes.js
 
 router.post('/api/comments', withAuth, async (req, res) => {
+    console.log('Session within /api/comments:', req.session);
     try {
         const newComment = await Comment.create({
             content: req.body.text,  // The text area's name attribute is "text"
             user_id: req.session.user_id,  // Assuming the user ID is stored in session
             post_id: req.body.postId  // The hidden input's name attribute is "postId"
         });
-
-        res.status(201).json(newComment);
+        const postId = newComment.post_id;
+        res.redirect(`/posts/${postId}`);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);

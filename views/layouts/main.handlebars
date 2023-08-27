@@ -7,9 +7,9 @@
     <title>Tech Blog</title>
     <link rel="stylesheet" href="/styles.css"><!-- Assuming you have a styles.css in the public folder -->
 </head>
-<body>
+<body data-logged-in="{{logged_in}}">
 
-<header data-logged-in="{{logged_in}}">
+<header>
     {{> navigation}}
 </header>
 
@@ -21,6 +21,6 @@
     <!-- Footer content goes here -->
     <p>© 2023 Tech Blog</p>
 </footer>
-
+{{!-- <script src="/js/script.js"></script> --}}
 </body>
 </html>
