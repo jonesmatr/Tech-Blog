@@ -1,4 +1,3 @@
-<p>DEBUG: This is the post.handlebars template</p>
 <h1>{{post.title}}</h1>
 <p>By: {{post.user.username}} on {{format_date post.date_created}}</p>
 <p>{{post.content}}</p>
@@ -12,12 +11,12 @@
     {{/each}}
 </ul>
 
-{{#if logged_in}}
-<form action="/api/comments" id="comment-form" method="POST">
+
+<form id="comment-form" action="/api/comments" method="POST">
     <input type="hidden" name="postId" value="{{post.id}}">
-    <textarea name="text" id="new-comment" placeholder="Leave a comment"></textarea>
+    <textarea name="text" placeholder="Leave a comment"></textarea>
     <button type="submit">Submit Comment</button>
 </form>
-{{else}}
-<p>You need to be logged in to leave a comment.</p>
-{{/if}}
+
+
+{{!-- Should I have a separate handlebars for the comments? --}}

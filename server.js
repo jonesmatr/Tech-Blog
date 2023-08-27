@@ -54,35 +54,6 @@ app.use('/', dashboardRoutes);
 // Activate postRoutes
 app.use('/api/posts', postRoutes);
 
-// Activate commentsRoutes
-const Comment = require('./models/Comment'); // Make sure to import your Comment model
-
-app.post('/api/comments', async (req, res) => {
-  const { postId, text } = req.body; // Destructure postId and text from req.body
-  
-  if (!postId || !text) {
-    return res.status(400).json({ error: 'Post ID and text are required' });
-  }
-  if (!req.session || !req.session.userId) {
-    return res.status(401).json({ error: 'You must be logged in to comment' });
-  }
-  try {
-    // Create the comment
-    const newComment = await Comment.create({
-      post_id: postId, // Note: the key should match your database schema
-      content: text,  // Note: the key should match your database schema
-      user_id: req.session.userId // Assumes you have user ID stored in session
-    });
-
-    res.status(201).json(newComment); // Respond with the newly created comment
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to create comment' });
-  }
-});
-
-
-
 // Activate routes
 app.use(routes);
 

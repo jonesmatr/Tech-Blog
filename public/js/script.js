@@ -1,4 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Check if user is logged in
+    const isLoggedIn = document.body.getAttribute('data-logged-in');
+    const commentForm = document.querySelector('#comment-form'); // Assume the form has an id="comment-form"
+    
+    if (!isLoggedIn) {
+        // Hide comment form if user is not logged in
+        if (commentForm) {
+            commentForm.style.display = 'none';
+        }
+    } else {
+        // Show comment form if user is logged in
+        if (commentForm) {
+            commentForm.style.display = 'block';
+        }
+    }
+    
     // Show/hide new post form
     const createNewPostButton = document.querySelector('#create-new-post-button');
     const newPostForm = document.querySelector('#new-post-form');
@@ -6,33 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
         newPostForm.classList.toggle('hidden');
     });
 
-    // Post comment form
-    document.getElementById('comment-form').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const postId = document.querySelector("input[name='postId']").value;
-        const newComment = document.getElementById('new-comment').value;
-      
-        // Submit the new comment using fetch or another AJAX method
-        const response = await fetch(`/api/comments`, {
-          method: 'POST',
-          body: JSON.stringify({ postId: postId, text: newComment }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-      
-        if (response.ok) {
-          // Optionally reload the page or update the comment list dynamically
-          location.reload();
-        }
-      });
-      
-
     // Delete post
     document.querySelectorAll('.delete-button').forEach(button => {
         button.addEventListener('click', async (event) => {
-            const postId = event.target.getAttribute('data-id');
-            const response = await fetch(`/api/posts/delete/${postId}`, {
+            const id = event.target.getAttribute('data-id');
+            const response = await fetch(`/api/posts/delete/${id}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
@@ -46,10 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener('click', async (event) => {
             event.preventDefault(); // Prevent default behavior of clicking an anchor tag
             console.log("Edit button clicked");
-            const postId = event.target.getAttribute('data-id');
+            const id = event.target.getAttribute('data-id');
 
             // Fetch existing post data
-            const response = await fetch(`/api/posts/${postId}`);
+            const response = await fetch(`/api/posts/${id}`);
             if (!response.ok) {
                 // Handle error
                 return;
@@ -58,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Create and populate form
             const formHtml = `
-                <form id="edit-post-form" data-id="${postId}">
+                <form id="edit-post-form" data-id="${id}">
                     <label for="edit-post-title">Title:</label>
                     <input type="text" id="edit-post-title" value="${postData.title}" required>
 
@@ -78,11 +73,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 editForm.addEventListener('submit', async (event) => {
                     event.preventDefault();
 
-                    const postId = editForm.getAttribute('data-id');
+                    const id = editForm.getAttribute('data-id');
                     const title = document.getElementById('edit-post-title').value.trim();
                     const content = document.getElementById('edit-post-content').value.trim();
 
-                    const response = await fetch(`/api/posts/edit/${postId}`, {
+                    const response = await fetch(`/api/posts/edit/${id}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ title, content })

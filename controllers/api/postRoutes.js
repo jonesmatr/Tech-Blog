@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { Post, Comment } = require('../../models');
+const { Post, Comment, User } = require('../../models');
 const withAuth = require('../../utils/auth');
+
+
+
 
 router.post('/create', withAuth, async (req, res) => {
     try {
@@ -75,24 +78,12 @@ router.delete('/delete/:id', withAuth, async (req, res) => {
 });
 
 
-router.get('/:id', withAuth, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        const postData = await Post.findByPk(req.params.id, {
-            include: [
-                {
-                    model: Comment,
-                    attributes: ['id', 'content', 'date_created', 'user_id'],
-                },
-            ],
-        });
-
+        const postData = await Post.findByPk(req.params.id);
         if (postData) {
             const post = postData.get({ plain: true });
-            console.log("Logged in status: ", req.session.logged_in);
-            res.render('post', { 
-                post, 
-                logged_in: req.session.logged_in  // Make sure you're passing this
-            });
+            res.status(200).json(post); // Respond with JSON
         } else {
             res.status(404).json({ message: 'No post found with this ID!' });
         }
@@ -102,13 +93,35 @@ router.get('/:id', withAuth, async (req, res) => {
     }
 });
 
-  
+// router.get('/:id', async (req, res) => {
+//     try {
+//         const postData = await Post.findByPk(req.params.id, {
+//             include: [
+//                 {
+//                     model: Comment,
+//                     attributes: ['id', 'content', 'post_id', 'user_id', 'date_created'],
+//                     include: {
+//                         model: User,
+//                         attributes: ['username']
+//                     }
+//                 }
+//             ]
+//         });
+
+//         if (postData) {
+//             const post = postData.get({ plain: true });
+//             res.json('post', { post, logged_in: req.session.logged_in });  // Note the 'logged_in' part
+//         } else {
+//             res.status(404).json({ message: 'No post found with this ID!' });
+//         }
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json(err);
+//     }
+// });
+
 router.post('/:id/comment', withAuth, async (req, res) => {
     try {
-        if (!req.session.logged_in) {
-            return res.status(401).json({ error: 'You must be logged in to comment' });
-        }
-
         const newComment = await Comment.create({
             content: req.body.content,
             user_id: req.session.user_id,  // Assuming the user ID is stored in session
@@ -120,5 +133,23 @@ router.post('/:id/comment', withAuth, async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+// Inside your postRoutes.js or a new file like commentRoutes.js
+
+router.post('/api/comments', withAuth, async (req, res) => {
+    try {
+        const newComment = await Comment.create({
+            content: req.body.text,  // The text area's name attribute is "text"
+            user_id: req.session.user_id,  // Assuming the user ID is stored in session
+            post_id: req.body.postId  // The hidden input's name attribute is "postId"
+        });
+
+        res.status(201).json(newComment);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
 
 module.exports = router;
