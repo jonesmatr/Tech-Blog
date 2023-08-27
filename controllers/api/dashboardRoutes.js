@@ -28,7 +28,7 @@ const posts = userPosts.map((post) => post.get({ plain: true }));
 });
 
 // Function to handle new post submission
-router.post('/api/posts', withAuth, async (req, res) => {
+router.post('/api/post', withAuth, async (req, res) => {
   try {
     const { title, content } = req.body;
 

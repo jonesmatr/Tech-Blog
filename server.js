@@ -52,7 +52,7 @@ app.use(logoutRoutes);
 app.use('/', dashboardRoutes);
 
 // Activate postRoutes
-app.use('/api/posts', postRoutes);
+app.use('/api/post', postRoutes);
 
 // Activate routes
 app.use(routes);

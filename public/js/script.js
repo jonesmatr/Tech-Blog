@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             commentForm.style.display = 'block';
         }
     }
-
+    
     // Show/hide new post form
     const createNewPostButton = document.querySelector('#create-new-post-button');
     const newPostForm = document.querySelector('#new-post-form');
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.delete-button').forEach(button => {
         button.addEventListener('click', async (event) => {
             const id = event.target.getAttribute('data-id');
-            const response = await fetch(`/api/posts/delete/${id}`, {
+            const response = await fetch(`/api/post/delete/${id}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
@@ -35,46 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-
-
-    // Add the postComment function
-    async function postComment() {
-        console.log("postComment function called");
-        // Get the data from your form
-        const postId = document.querySelector('input[name="postId"]').value;
-        const text = document.querySelector('textarea[name="text"]').value;
-
-        console.log("postId:", postId);
-
-        console.log("About to make fetch call, postId is: ", postId);
-
-        const response = await fetch('/api/comments', {
-            method: 'POST',
-            body: JSON.stringify({ postId, text }),
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        console.log("Fetch call made, response is: ", response);
-
-        if (response.ok) {
-            // Comment successfully created
-            document.location.replace(`/post/${postId}`); // Refresh the page to see the new comment
-        } else {
-            // Handle error
-            console.error('Failed to post comment');
-        }
-    }
-
-    // Attach the postComment function to the comment form's submit event
-    
-    if (commentForm) {
-        commentForm.addEventListener('submit', function(event) {
-            console.log("Submit event triggered");
-            event.preventDefault();
-            postComment();
-        });
-    }
-
 
     // Edit post
     document.querySelectorAll('.edit-button').forEach(button => {
@@ -84,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const id = event.target.getAttribute('data-id');
 
             // Fetch existing post data
-            const response = await fetch(`/api/posts/${id}`);
+            const response = await fetch(`/api/post/${id}`);
             if (!response.ok) {
                 // Handle error
                 return;
@@ -117,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const title = document.getElementById('edit-post-title').value.trim();
                     const content = document.getElementById('edit-post-content').value.trim();
 
-                    const response = await fetch(`/api/posts/edit/${id}`, {
+                    const response = await fetch(`/api/post/edit/${id}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ title, content })
@@ -133,7 +93,3 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         });
     });
-
-
-    //Still not being redirected to the post page where the comment was posted the comments are being created in the 
-    //the database and are posting to the post page but the browser is not redirecting to the post page.
