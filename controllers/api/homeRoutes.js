@@ -72,33 +72,6 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-
-router.post('/login', async (req, res) => {
-    try {
-        const userData = await User.findOne({ where: { username: req.body.username } });
-
-        if (!userData) {
-            res.status(400).json({ message: 'Incorrect credentials, please try again' });
-            return;
-        }
-
-        const validPassword = await bcrypt.compare(req.body.password, userData.password);
-
-        if (!validPassword) {
-            res.status(400).json({ message: 'Incorrect credentials, please try again' });
-            return;
-        }
-
-        req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.logged_in = true;
-            res.redirect('/dashboard'); // Redirect to the dashboard or desired page
-        });
-    } catch (error) {
-        res.status(500).json({ message: 'An error occurred during login.' });
-    }
-});
-
 router.post('/api/comments', async (req, res) => {
     try {
         const { postId, text } = req.body;
