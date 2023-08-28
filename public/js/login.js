@@ -5,7 +5,7 @@ const loginFormHandler = async (event) => {
   const password = document.querySelector('#password-login').value.trim();
 
   if (username && password) {
-    const response = await fetch('https://tech-blog-08282023-b51a638c8d74.herokuapp.com/login', { //'/api/users/login'
+    const response = await fetch('/api/users/login', { //'/api/users/login'
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
