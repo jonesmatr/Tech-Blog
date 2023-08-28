@@ -10,6 +10,7 @@ const logoutRoutes = require('./controllers/api/logoutRoutes');
 const postRoutes = require('./controllers/api/postRoutes');
 const helpers = require('./utils/helpers');
 const { format_date } = require('./utils/helpers');
+const cors = require('cors'); // Import the cors package
 
 
 
@@ -18,6 +19,8 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware to parse JSON and urlencoded form data
 app.use(express.json());
+// Use the cors middleware
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // Static directory
