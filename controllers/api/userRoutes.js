@@ -63,15 +63,14 @@
 
 // module.exports = router;
 
-
 const bcrypt = require('bcrypt');
 const router = require('express').Router();
 const { User } = require('../../models');
 
 router.post('/', async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const userData = await User.create({ ...req.body, password: hashedPassword });
+    // const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const userData = await User.create({ ...req.body,}); //Removed this  password: hashedPassword 
 
     req.session.save(() => {
       req.session.user_id = userData.id;
