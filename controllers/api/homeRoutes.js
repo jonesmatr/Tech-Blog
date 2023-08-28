@@ -51,8 +51,52 @@ router.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+router.post('/signup', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        const newUser = await User.create({
+            username: req.body.username,
+            password: hashedPassword,
+        });
+
+        // You can also perform additional actions after successful sign-up
+
+        res.redirect('/login'); // Redirect to the login page
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred during sign-up.' });
+    }
+});
+
 router.get('/login', (req, res) => {
     res.render('login');
+});
+
+
+router.post('/login', async (req, res) => {
+    try {
+        const userData = await User.findOne({ where: { username: req.body.username } });
+
+        if (!userData) {
+            res.status(400).json({ message: 'Incorrect credentials, please try again' });
+            return;
+        }
+
+        const validPassword = await bcrypt.compare(req.body.password, userData.password);
+
+        if (!validPassword) {
+            res.status(400).json({ message: 'Incorrect credentials, please try again' });
+            return;
+        }
+
+        req.session.save(() => {
+            req.session.user_id = userData.id;
+            req.session.logged_in = true;
+            res.redirect('/dashboard'); // Redirect to the dashboard or desired page
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred during login.' });
+    }
 });
 
 router.post('/api/comments', async (req, res) => {
