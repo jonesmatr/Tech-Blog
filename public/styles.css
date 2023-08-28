@@ -21,9 +21,11 @@ body, h1, h2, h3, h4, p, ul, li {
 /* Apply a background color */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
+
 
 /* Container for centering content */
 .container {
@@ -34,10 +36,39 @@ body {
 
 /* Header styles */
 header {
-    background-color: #50b3a2;
+    background-color: #A5D6A7;
     color: white;
     text-align: center;
     padding: 10px 0;
+}
+
+/* Custom Navbar styles */
+.navbar {
+    background-color: #5D4037;  /* dark brown */
+    color: #A5D6A7;  /* light green */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar a {
+    color: #A5D6A7;  /* light green */
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+.navbar form {
+    display: inline;
+}
+
+/* Custom h1 styles */
+h1 {
+    font-size: 36px;
+    color: #5D4037;  /* dark brown */
+    background-color: #A5D6A7;  /* light green */
+    padding: 10px;
+    text-align: left;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Navigation styles */
@@ -78,7 +109,7 @@ form button {
 }
 
 form button {
-    background-color: #50b3a2;
+    background-color: #A5D6A7;
     color: white;
     border: none;
     padding: 10px;
@@ -107,3 +138,15 @@ ul.posts li {
     display: none;
   }
   
+
+  /* Update button colors to match */
+button {
+    background-color: #5D4037;  /* dark brown background to match */
+    color: #A5D6A7;  /* light green text to match */
+}
+
+/* Update button hover colors to match */
+button:hover {
+    background-color: #A5D6A7;  /* light green background to match */
+    color: #5D4037;  /* dark brown text to match */
+}
