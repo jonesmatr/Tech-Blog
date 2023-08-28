@@ -6,7 +6,7 @@ This is a Tech Blog web application where users can create, edit, and delete the
 
 The site can be accessed [here](https://github.com/jonesmatr/Tech-Blog.git).
 
-![Tech Blog](./assets/images/Website-Screenshot.jpg) 
+![Tech Blog](./public/assets/images/Website-Screenshot.jpg) 
 
 ## Table of Contents
 
