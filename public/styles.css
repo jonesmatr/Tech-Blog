@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -9,7 +9,98 @@ body {
     width: 80%;
     margin: auto;
     overflow: hidden;
+} */
+
+
+/* Reset some default browser styles */
+body, h1, h2, h3, h4, p, ul, li {
+    margin: 0;
+    padding: 0;
 }
+
+/* Apply a background color */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Container for centering content */
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Header styles */
+header {
+    background-color: #50b3a2;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Navigation styles */
+nav ul {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+/* Main content area */
+main {
+    padding: 20px;
+}
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Form styles */
+form label,
+form input,
+form button {
+    display: block;
+    margin-bottom: 20px;
+}
+
+form button {
+    background-color: #50b3a2;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #333;
+}
+
+/* List of posts */
+ul.posts {
+    list-style-type: none;
+}
+
+ul.posts li {
+    background-color: #fff;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
 
 /* Add more styles as needed */
 .hidden {

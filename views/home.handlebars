@@ -1,4 +1,4 @@
-<h2>All Posts</h2>
+{{!-- <h2>All Posts</h2>
 <ul>
     {{#each posts}}
     <li>
@@ -6,4 +6,15 @@
         <small>Posted on: {{format_date this.date_created}}</small>
     </li>
     {{/each}}
-</ul>
+</ul> --}}
+
+<main class="container">
+    <ul class="posts">
+        {{#each posts}}
+        <li>
+            <a href="/post/{{this.id}}">{{this.title}}</a>
+            <small>Posted on: {{format_date this.date_created}}</small>
+        </li>
+        {{/each}}
+    </ul>
+</main>
