@@ -70,7 +70,7 @@ const { User } = require('../../models');
 router.post('/', async (req, res) => {
   try {
     // const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const userData = await User.create({ ...req.body,}); //Removed this  password: hashedPassword 
+    const userData = await User.create({ ...req.body,}); //Removed this 
 
     req.session.save(() => {
       req.session.user_id = userData.id;
