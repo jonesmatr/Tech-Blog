@@ -1,14 +1,26 @@
 <form action="/api/users/login" method="post">
     <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+    <input type="text" id="username-login" name="username" required>
 
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    <input type="password" id="password-login" name="password" required>
 
     <button type="submit">Sign In</button>
 </form>
 
 <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+
+<form action="/api/users/signup" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username-signup" name="username" required>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password-signup" name="password" required>
+    
+    <button type="submit">Sign Up</button>
+</form>
+
+<script src="./js/login.js"></script>
 
 
 {{!-- <div class="row">
@@ -52,17 +64,7 @@
 
 <!-- signup.handlebars -->
 
-<form action="/api/users/signup" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    
-    <button type="submit">Sign Up</button>
-</form>
 
-<script src="./js/login.js"></script>
 
 
 
