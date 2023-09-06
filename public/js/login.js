@@ -6,7 +6,7 @@
       const password = document.querySelector('#password-login').value.trim();
 
       if (username && password) {
-          const response = await fetch('/login', {
+          const response = await fetch('/api/users/login', {
               method: 'POST',
               body: JSON.stringify({ username, password }),
               headers: { 'Content-Type': 'application/json' },
@@ -27,7 +27,7 @@
       const password = document.querySelector('#password-signup').value.trim();
 
       if (username && password) {
-          const response = await fetch('/signup', {
+          const response = await fetch('/api/users', {
               method: 'POST',
               body: JSON.stringify({ username, password }),
               headers: { 'Content-Type': 'application/json' },
