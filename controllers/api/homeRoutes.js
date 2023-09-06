@@ -53,6 +53,7 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
+    console.log('Received request:', req.body);
     try {
 
         // Check if username already exists
