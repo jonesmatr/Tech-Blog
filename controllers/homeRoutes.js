@@ -53,17 +53,19 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
+    console.log("Signup route hit, request body:", req.body);
     try {
         
         const newUser = await User.create({
             username: req.body.username,
             password: hashedPassword,
         });
-
+        console.log("New user created:", newUser);
         // You can also perform additional actions after successful sign-up
 
         res.redirect('/login'); // Redirect to the login page
     } catch (error) {
+        console.error("Signup error:", error); 
         res.status(500).json({ message: 'An error occurred during sign-up.' });
     }
 });
