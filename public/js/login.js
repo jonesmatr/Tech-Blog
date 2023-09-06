@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.querySelector('.login-form');
   const signupForm = document.querySelector('.signup-form');
@@ -11,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = document.querySelector('#password-login').value.trim();
 
       if (username && password) {
-          const response = await fetch('/api/users/login', {
+          const response = await fetch('/login', {
               method: 'POST',
               body: JSON.stringify({ username, password }),
               headers: { 'Content-Type': 'application/json' },
@@ -30,8 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const username = document.querySelector('#username-signup').value.trim();
       const password = document.querySelector('#password-signup').value.trim();
-      console.log("Sending username: ", username);
-      console.log("Sending password: ", password);
 
       if (username && password) {
           const response = await fetch('/signup', {
