@@ -20,7 +20,7 @@ console.log('Posts fetched:', userPosts);
 
 // Serialize data before passing to template
 const posts = userPosts.map((post) => post.get({ plain: true }));
-  res.render('dashboard', { posts });
+  res.render('/dashboard', { posts });
 } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
