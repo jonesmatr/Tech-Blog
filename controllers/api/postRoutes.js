@@ -93,32 +93,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const postData = await Post.findByPk(req.params.id, {
-//             include: [
-//                 {
-//                     model: Comment,
-//                     attributes: ['id', 'content', 'post_id', 'user_id', 'date_created'],
-//                     include: {
-//                         model: User,
-//                         attributes: ['username']
-//                     }
-//                 }
-//             ]
-//         });
-
-//         if (postData) {
-//             const post = postData.get({ plain: true });
-//             res.json('post', { post, logged_in: req.session.logged_in });  // Note the 'logged_in' part
-//         } else {
-//             res.status(404).json({ message: 'No post found with this ID!' });
-//         }
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json(err);
-//     }
-// });
 
 router.post('/:id/comment', withAuth, async (req, res) => {
     try {
@@ -136,7 +110,7 @@ router.post('/:id/comment', withAuth, async (req, res) => {
 
 // Inside your postRoutes.js or a new file like commentRoutes.js
 
-router.post('/comments', withAuth, async (req, res) => {
+router.post('/api/comments', withAuth, async (req, res) => {
     try {
         const newComment = await Comment.create({
             content: req.body.text,  // The text area's name attribute is "text"

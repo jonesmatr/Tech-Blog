@@ -1,19 +1,3 @@
-// const express = require('express');
-// const router = express.Router();
-
-// // Define the /logout route
-// router.post('/logout', (req, res) => {
-//     if (req.session.logged_in) {
-//         req.session.destroy(() => {
-//             res.redirect('/'); // Redirect to the home page
-//         });
-//     } else {
-//         res.status(404).end();
-//     }
-// });
-
-// module.exports = router;
-
 
 const express = require('express');
 const router = express.Router();
