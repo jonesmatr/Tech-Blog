@@ -49,7 +49,7 @@ router.get('/post/:id', async (req, res) => {
 
 // Routes for signup and login pages
 router.get('/signup', (req, res) => {
-    res.render('signup');
+    res.render('login');
 });
 
 router.post('/signup', async (req, res) => {

@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.querySelector('.login-form');
-  const signupForm = document.querySelector('.signup-form');
+// document.addEventListener('DOMContentLoaded', () => {
+//   const loginForm = document.querySelector('.login-form');
+//   const signupForm = document.querySelector('.signup-form');
 
   const loginFormHandler = async (event) => {
       event.preventDefault();
@@ -44,9 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   };
 
-  loginForm.addEventListener('submit', loginFormHandler);
-  signupForm.addEventListener('submit', signupFormHandler);
-});
+//   loginForm.addEventListener('submit', loginFormHandler);
+//   signupForm.addEventListener('submit', signupFormHandler);
+
+  document
+  .querySelector('.login-form')
+  .addEventListener('submit', loginFormHandler);
+
+document
+  .querySelector('.signup-form')
+  .addEventListener('submit', signupFormHandler);
+
 
 // const loginFormHandler = async (event) => {
 //   event.preventDefault();
