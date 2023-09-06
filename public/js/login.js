@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const username = document.querySelector('#username-signup').value.trim();
       const password = document.querySelector('#password-signup').value.trim();
+      console.log("Sending username: ", username);
+      console.log("Sending password: ", password);
 
       if (username && password) {
           const response = await fetch('/signup', {
