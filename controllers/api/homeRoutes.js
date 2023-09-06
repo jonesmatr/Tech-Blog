@@ -54,6 +54,12 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', async (req, res) => {
     try {
+
+        // Check if username already exists
+        const existingUser = await User.findOne({ where: { username: req.body.username } });
+        if (existingUser) {
+            return res.status(400).json({ message: "Username already taken" });
+        }
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
         const newUser = await User.create({
@@ -66,6 +72,9 @@ router.post('/signup', async (req, res) => {
         res.redirect('/login'); // Redirect to the login page
     } catch (error) {
         console.error(error);
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({ message: 'Username already taken' });
+        }
         res.status(500).json({ message: 'An error occurred during sign-up.' });
     }
 });
