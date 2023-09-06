@@ -136,14 +136,14 @@ router.post('/:id/comment', withAuth, async (req, res) => {
 
 // Inside your postRoutes.js or a new file like commentRoutes.js
 
-router.post('/api/comments', withAuth, async (req, res) => {
+router.post('/comments', withAuth, async (req, res) => {
     try {
         const newComment = await Comment.create({
             content: req.body.text,  // The text area's name attribute is "text"
             user_id: req.session.user_id,  // Assuming the user ID is stored in session
             post_id: req.body.postId  // The hidden input's name attribute is "postId"
         });
-        res.redirect(`/post/${postId}`);
+        res.redirect(`/post/${post_id}`);
         // res.status(201).json(newComment);
     } catch (err) {
         console.error(err);

@@ -83,7 +83,7 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/api/comments', async (req, res) => {
+router.post('/comments', async (req, res) => {
     try {
         const { postId, text } = req.body;
 
