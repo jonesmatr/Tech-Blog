@@ -53,14 +53,7 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
-    console.log('Received request:', req.body);
     try {
-
-        // Check if username already exists
-        const existingUser = await User.findOne({ where: { username: req.body.username } });
-        if (existingUser) {
-            return res.status(400).json({ message: "Username already taken" });
-        }
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
         const newUser = await User.create({
@@ -72,10 +65,6 @@ router.post('/signup', async (req, res) => {
 
         res.redirect('/login'); // Redirect to the login page
     } catch (error) {
-        console.error(error);
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).json({ message: 'Username already taken' });
-        }
         res.status(500).json({ message: 'An error occurred during sign-up.' });
     }
 });
@@ -84,7 +73,34 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/comments', async (req, res) => {
+
+router.post('/login', async (req, res) => {
+    try {
+        const userData = await User.findOne({ where: { username: req.body.username } });
+
+        if (!userData) {
+            res.status(400).json({ message: 'Incorrect credentials, please try again' });
+            return;
+        }
+
+        const validPassword = await bcrypt.compare(req.body.password, userData.password);
+
+        if (!validPassword) {
+            res.status(400).json({ message: 'Incorrect credentials, please try again' });
+            return;
+        }
+
+        req.session.save(() => {
+            req.session.user_id = userData.id;
+            req.session.logged_in = true;
+            res.redirect('/dashboard'); // Redirect to the dashboard or desired page
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'An error occurred during login.' });
+    }
+});
+
+router.post('/api/comments', async (req, res) => {
     try {
         const { postId, text } = req.body;
 
